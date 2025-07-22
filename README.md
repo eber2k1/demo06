@@ -65,7 +65,7 @@ Cada vez que se crea una cita médica, el sistema notifica automáticamente a:
 
 ---
 
-###💡 Proceso de Creación de Cita Médica
+### 💡 Proceso de Creación de Cita Médica
 
 1. **Se muestra la lista de pacientes.**  
    ![Paso 1 - Lista de pacientes](assets/paso01.png)
