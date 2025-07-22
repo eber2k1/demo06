@@ -5,6 +5,9 @@ Thumbs.dbencryptable
 ehthumbs.db
 ehthumbs_vista.db
 
+# DocumentacionDoxygen
+DocumentacionDoxygen/
+
 # Dump file
 .stackdump
 
