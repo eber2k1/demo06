@@ -65,15 +65,28 @@ Cada vez que se crea una cita médica, el sistema notifica automáticamente a:
 
 ---
 
-### 💡 Ejemplo de Flujo del Programa
+#💡 Proceso de Creación de Cita Médica
 
-```text
-1. Se muestra la lista de pacientes.
-2. El usuario elige un paciente por ID.
-3. Se muestra la lista de citas existentes.
-4. El usuario ingresa los datos de la nueva cita.
-5. Se muestra la lista de doctores.
-6. El usuario selecciona un doctor por ID.
-7. Se crea la cita y se asigna.
-8. Se notifica al paciente, doctor y recepcionista.
-```
+1. **Se muestra la lista de pacientes.**  
+   ![Paso 1 - Lista de pacientes](assets/paso01.png)
+
+2. **El usuario elige un paciente por ID.**  
+   ![Paso 2 - Selección de paciente](assets/paso02.png)
+
+3. **Se muestra la lista de citas existentes.**  
+   ![Paso 3 - Citas existentes](assets/paso03.png)
+
+4. **El usuario ingresa los datos de la nueva cita.**  
+   ![Paso 4 - Datos nueva cita](assets/paso04.png)
+
+5. **Se muestra la lista de doctores.**  
+   ![Paso 5 - Lista de doctores](assets/paso05.png)
+
+6. **El usuario selecciona un doctor por ID.**  
+   ![Paso 6 - Selección de doctor](assets/paso06.png)
+
+7. **Se crea la cita y se asigna.**  
+   ![Paso 7 - Cita creada](assets/paso07.png)
+
+8. **Se notifica al paciente, doctor y recepcionista.**  
+   ![Paso 8 - Notificación enviada](assets/paso08.png)
