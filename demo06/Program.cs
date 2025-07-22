@@ -1,29 +1,59 @@
 ﻿using System.Dynamic;
 
+/// <summary>
+/// Sistema de gestión de citas médicas que permite administrar pacientes, doctores, recepcionistas y citas médicas.
+/// </summary>
 internal class Program
 {
-
     /// <summary>
-    ///  Interface IMedicalAppointment define un contrato para las citas médicas.
+    /// Interfaz que define un contrato para las citas médicas.
     /// </summary>
     interface IMedicalAppointment
     {
-        void ShowAllMedicalAppointment(); // Método para mostrar todas las citas médicas
+        /// <summary>
+        /// Método para mostrar todas las citas médicas
+        /// </summary>
+        void ShowAllMedicalAppointment();
     }
 
-
     /// <summary>
-    /// Clase MedicalAppointment implementa la interfaz IMedicalAppointment y representa una cita médica.
+    /// Clase que implementa la interfaz IMedicalAppointment y representa una cita médica en el sistema.
     /// </summary>
-    
     class MedicalAppointment : IMedicalAppointment
     {
+        /// <summary>
+        /// Identificador único de la cita médica
+        /// </summary>
         private int Id { get; set; }
-        public DateTime Date { get; set; }
-        public string specialty { get; set; }
-        public string PacienteFullName { get; set; } // Nombre del paciente asignado a la cita
-        public string DoctorFullName { get; set; } // Nombre del doctor asignado a la cita
 
+        /// <summary>
+        /// Fecha y hora programada para la cita médica
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Especialidad médica de la cita
+        /// </summary>
+        public string specialty { get; set; }
+
+        /// <summary>
+        /// Nombre completo del paciente asignado a la cita
+        /// </summary>
+        public string PacienteFullName { get; set; }
+
+        /// <summary>
+        /// Nombre completo del doctor asignado a la cita
+        /// </summary>
+        public string DoctorFullName { get; set; }
+
+        /// <summary>
+        /// Constructor para crear una nueva cita médica
+        /// </summary>
+        /// <param name="_id">Identificador único de la cita</param>
+        /// <param name="_date">Fecha y hora de la cita</param>
+        /// <param name="_specialty">Especialidad médica requerida</param>
+        /// <param name="doctor">Doctor asignado a la cita</param>
+        /// <param name="paciente">Paciente para quien se programa la cita</param>
         public MedicalAppointment(int _id, DateTime _date, string _specialty, Doctor doctor, Patient paciente)
         {
             Id = _id;
@@ -33,26 +63,65 @@ internal class Program
             PacienteFullName = paciente.Name + " " + paciente.LastName;
         }
 
+        /// <summary>
+        /// Muestra la información completa de la cita médica en consola
+        /// </summary>
         public void ShowAllMedicalAppointment()
         {
             Console.WriteLine($"Cita ID: {Id}, Fecha: {Date.ToShortDateString()}, Especialidad: {specialty}, Paciente: {PacienteFullName}, Doctor: {DoctorFullName}");
         }
-
-        // Notificar sobre una cita médica
-
     }
-    
 
-    // Clase Usuario representa un usuario del sistema
+    /// <summary>
+    /// Clase base que representa un usuario del sistema médico
+    /// </summary>
     class User
     {
+        /// <summary>
+        /// Identificador único del usuario
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Nombre del usuario
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Apellido del usuario
+        /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Documento Nacional de Identidad del usuario
+        /// </summary>
         public string Dni { get; set; }
+
+        /// <summary>
+        /// Número de teléfono del usuario
+        /// </summary>
         public string Phone { get; set; }
+
+        /// <summary>
+        /// Dirección de correo electrónico del usuario
+        /// </summary>
         public string Email { get; set; }
+
+        /// <summary>
+        /// Edad del usuario
+        /// </summary>
         public int Age { get; set; }
+
+        /// <summary>
+        /// Constructor para crear un nuevo usuario
+        /// </summary>
+        /// <param name="_id">Identificador único del usuario</param>
+        /// <param name="_name">Nombre del usuario</param>
+        /// <param name="_lastName">Apellido del usuario</param>
+        /// <param name="_dni">Documento Nacional de Identidad</param>
+        /// <param name="_phone">Número de teléfono</param>
+        /// <param name="_email">Dirección de correo electrónico</param>
+        /// <param name="_age">Edad del usuario</param>
         public User(int _id, string _name, string _lastName, string _dni, string _phone, string _email, int _age)
         {
             Id = _id;
@@ -64,71 +133,145 @@ internal class Program
             Age = _age;
         }
 
-        // Notificar al usuario sobre una nueva cita médica
+        /// <summary>
+        /// Notifica al usuario sobre una nueva cita médica
+        /// </summary>
         public virtual void Notify()
         {
             Console.WriteLine($"Hola {Name} {LastName}, te notificamos que tienes una nueva cita médica.");
         }
 
+        /// <summary>
+        /// Devuelve una representación en cadena de los datos del usuario
+        /// </summary>
+        /// <returns>String con la información completa del usuario</returns>
         public override string ToString()
         {
             return $"Id: {Id}, Nombre: {Name} {LastName}, DNI: {Dni}, Telefono: {Phone}, Email: {Email}, Edad: {Age}";
         }
     }
 
-    // Clase Patient hereda de Usuario y representa un paciente en el sistema
+    /// <summary>
+    /// Clase que hereda de User y representa un paciente en el sistema médico
+    /// </summary>
     class Patient : User
     {
-        public string nroHistory { get; set; } // Número de historia clínica
-        public List<MedicalAppointment> MedicalAppointments { get; set; } = new List<MedicalAppointment>(); // Lista de citas médicas del paciente
+        /// <summary>
+        /// Número de historia clínica del paciente
+        /// </summary>
+        public string nroHistory { get; set; }
 
+        /// <summary>
+        /// Lista de citas médicas asignadas al paciente
+        /// </summary>
+        public List<MedicalAppointment> MedicalAppointments { get; set; } = new List<MedicalAppointment>();
+
+        /// <summary>
+        /// Constructor para crear un nuevo paciente
+        /// </summary>
+        /// <param name="_id">Identificador único del paciente</param>
+        /// <param name="_name">Nombre del paciente</param>
+        /// <param name="_lastName">Apellido del paciente</param>
+        /// <param name="_dni">Documento Nacional de Identidad</param>
+        /// <param name="_phone">Número de teléfono</param>
+        /// <param name="_email">Dirección de correo electrónico</param>
+        /// <param name="_age">Edad del paciente</param>
+        /// <param name="_nroHistory">Número de historia clínica</param>
         public Patient(int _id, string _name, string _lastName, string _dni, string _phone, string _email, int _age, string _nroHistory)
             : base(_id, _name, _lastName, _dni, _phone, _email, _age)
         {
             nroHistory = _nroHistory;
         }
 
+        /// <summary>
+        /// Obtiene el identificador del paciente
+        /// </summary>
+        /// <param name="id">Parámetro de identificador (no utilizado en la implementación actual)</param>
+        /// <returns>El identificador del paciente</returns>
         public int GetId(int id)
         {
             return Id;
         }
-        
+
+        /// <summary>
+        /// Agrega una nueva cita médica a la lista del paciente
+        /// </summary>
+        /// <param name="cita">Cita médica a agregar</param>
         public void AddCita(MedicalAppointment cita)
         {
             MedicalAppointments.Add(cita);
         }
 
-        // Notificar al paciente sobre una nueva cita médica
+        /// <summary>
+        /// Notifica al paciente sobre su nueva cita médica con detalles específicos
+        /// </summary>
         public override void Notify()
         {
             Console.WriteLine($"Hola {Name} {LastName}, te notificamos que tienes una nueva cita médica programada el dia {MedicalAppointments.Last().Date.ToShortDateString()} con el doctor {MedicalAppointments.Last().DoctorFullName}.");
         }
 
+        /// <summary>
+        /// Muestra todas las citas médicas del paciente en consola
+        /// </summary>
         public void ShowAllMedicalAppointment()
         {
             MedicalAppointments.ForEach(cita => Console.WriteLine($"Citas del Paciente {Name} {LastName}: {cita}"));
         }
 
-
+        /// <summary>
+        /// Devuelve una representación en cadena de los datos del paciente incluyendo su historia clínica
+        /// </summary>
+        /// <returns>String con la información completa del paciente</returns>
         public override string ToString()
         {
             return base.ToString() + $", Numero de Historia Clinica: {nroHistory}";
-
         }
-
-
     }
 
-    // Clase Doctor representa un doctor en el sistema
-
+    /// <summary>
+    /// Clase que hereda de User y representa un doctor en el sistema médico
+    /// </summary>
     class Doctor : User
     {
-        public string Specialty { get; set; } // Especialidad del doctor
-        public string GraduationUniversity { get; set; } // Universidad de egreso del doctor
-        public string TuitionNumber { get; set; } // Número de colegiatura del doctor
-        public int YearsOfExperience { get; set; } // Años de experiencia del doctor
+        /// <summary>
+        /// Especialidad médica del doctor
+        /// </summary>
+        public string Specialty { get; set; }
 
-        public List<MedicalAppointment> MedicalAppointmentsPending { get; set; } = new List<MedicalAppointment>(); // Lista de citas médicas del doctor
+        /// <summary>
+        /// Universidad donde se graduó el doctor
+        /// </summary>
+        public string GraduationUniversity { get; set; }
+
+        /// <summary>
+        /// Número de colegiatura profesional del doctor
+        /// </summary>
+        public string TuitionNumber { get; set; }
+
+        /// <summary>
+        /// Años de experiencia profesional del doctor
+        /// </summary>
+        public int YearsOfExperience { get; set; }
+
+        /// <summary>
+        /// Lista de citas médicas pendientes asignadas al doctor
+        /// </summary>
+        public List<MedicalAppointment> MedicalAppointmentsPending { get; set; } = new List<MedicalAppointment>();
+
+        /// <summary>
+        /// Constructor para crear un nuevo doctor
+        /// </summary>
+        /// <param name="_id">Identificador único del doctor</param>
+        /// <param name="_name">Nombre del doctor</param>
+        /// <param name="_lastName">Apellido del doctor</param>
+        /// <param name="_dni">Documento Nacional de Identidad</param>
+        /// <param name="_phone">Número de teléfono</param>
+        /// <param name="_email">Dirección de correo electrónico</param>
+        /// <param name="_age">Edad del doctor</param>
+        /// <param name="_specialty">Especialidad médica</param>
+        /// <param name="_GraduationUniversity">Universidad de graduación</param>
+        /// <param name="_TuitionNumber">Número de colegiatura</param>
+        /// <param name="_YearsOfExperience">Años de experiencia profesional</param>
         public Doctor(int _id, string _name, string _lastName, string _dni, string _phone, string _email, int _age, string _specialty, string _GraduationUniversity, string _TuitionNumber, int _YearsOfExperience)
             : base(_id, _name, _lastName, _dni, _phone, _email, _age)
         {
@@ -138,78 +281,147 @@ internal class Program
             YearsOfExperience = _YearsOfExperience;
         }
 
+        /// <summary>
+        /// Obtiene el identificador del doctor
+        /// </summary>
+        /// <param name="id">Parámetro de identificador (no utilizado en la implementación actual)</param>
+        /// <returns>El identificador del doctor</returns>
         public int GetId(int id)
         {
             return Id;
         }
 
+        /// <summary>
+        /// Agrega una nueva cita médica pendiente a la lista del doctor
+        /// </summary>
+        /// <param name="cita">Cita médica a agregar como pendiente</param>
         public void AddCitaPending(MedicalAppointment cita)
         {
             MedicalAppointmentsPending.Add(cita);
         }
 
-        // Notificar al doctor sobre una nueva cita médica
+        /// <summary>
+        /// Notifica al doctor sobre su nueva cita médica con detalles específicos
+        /// </summary>
         public override void Notify()
         {
             Console.WriteLine($"Hola Dr. {Name} {LastName}, te notificamos que tienes una nueva cita médica programada el dia {MedicalAppointmentsPending.Last().Date.ToShortDateString()} con el paciente {MedicalAppointmentsPending.Last().PacienteFullName}.");
         }
 
-
+        /// <summary>
+        /// Devuelve una representación en cadena de los datos del doctor incluyendo información profesional
+        /// </summary>
+        /// <returns>String con la información completa del doctor</returns>
         public override string ToString()
         {
             return base.ToString() + $", Especialidad: {Specialty}, Universidad de Egreso: {GraduationUniversity}, Numero de Colegiatura: {TuitionNumber}, Años de Experiencia: {YearsOfExperience}";
         }
     }
 
-    // Clase Receptionist representa un recepcionista en el sistema
-
+    /// <summary>
+    /// Clase que hereda de User y representa un recepcionista en el sistema médico
+    /// </summary>
     class Recepcionist : User
     {
-        public string WorkSchedule { get; set; } // Horario de trabajo del recepcionista
-        public string WorkArea { get; set; } // Área de trabajo del recepcionista
-        public List<MedicalAppointment> MedicalAppointmentsPending { get; set; } = new List<MedicalAppointment>(); // Lista de citas médicas pendientes del recepcionista
+        /// <summary>
+        /// Horario de trabajo del recepcionista
+        /// </summary>
+        public string WorkSchedule { get; set; }
 
+        /// <summary>
+        /// Área de trabajo asignada al recepcionista
+        /// </summary>
+        public string WorkArea { get; set; }
+
+        /// <summary>
+        /// Lista de citas médicas pendientes que debe gestionar el recepcionista
+        /// </summary>
+        public List<MedicalAppointment> MedicalAppointmentsPending { get; set; } = new List<MedicalAppointment>();
+
+        /// <summary>
+        /// Constructor para crear un nuevo recepcionista
+        /// </summary>
+        /// <param name="_id">Identificador único del recepcionista</param>
+        /// <param name="_name">Nombre del recepcionista</param>
+        /// <param name="_lastName">Apellido del recepcionista</param>
+        /// <param name="_dni">Documento Nacional de Identidad</param>
+        /// <param name="_phone">Número de teléfono</param>
+        /// <param name="_email">Dirección de correo electrónico</param>
+        /// <param name="_age">Edad del recepcionista</param>
+        /// <param name="_workSchedule">Horario de trabajo</param>
+        /// <param name="_workArea">Área de trabajo asignada</param>
         public Recepcionist(int _id, string _name, string _lastName, string _dni, string _phone, string _email, int _age, string _workSchedule, string _workArea)
         : base(_id, _name, _lastName, _dni, _phone, _email, _age)
-         {
-             WorkSchedule = _workSchedule;
-             WorkArea = _workArea;
+        {
+            WorkSchedule = _workSchedule;
+            WorkArea = _workArea;
         }
 
+        /// <summary>
+        /// Agrega una nueva cita médica pendiente para gestionar
+        /// </summary>
+        /// <param name="cita">Cita médica a agregar como pendiente de gestión</param>
         public void AddCitaPending(MedicalAppointment cita)
         {
             MedicalAppointmentsPending.Add(cita);
         }
 
-        // Notificar al recepcionista sobre una nueva cita médica
+        /// <summary>
+        /// Notifica al recepcionista sobre una nueva cita médica que debe gestionar
+        /// </summary>
         public override void Notify()
         {
             Console.WriteLine($"Hola {Name} {LastName}, te notificamos que tienes una nueva cita médica pendiente para gestionar, el dia {MedicalAppointmentsPending.Last().Date.ToShortDateString()}.");
         }
 
+        /// <summary>
+        /// Devuelve una representación en cadena de los datos del recepcionista incluyendo información laboral
+        /// </summary>
+        /// <returns>String con la información completa del recepcionista</returns>
         public override string ToString()
-         {
-             return base.ToString() + $", Horario de Trabajo: {WorkSchedule}, Area de Trabajo: {WorkArea}";
+        {
+            return base.ToString() + $", Horario de Trabajo: {WorkSchedule}, Area de Trabajo: {WorkArea}";
         }
     }
 
-    // Clase Hospital representa un hospital
+    /// <summary>
+    /// Clase que representa un hospital en el sistema
+    /// </summary>
     class Hospital
     {
+        /// <summary>
+        /// Identificador único del hospital
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Nombre del hospital
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Dirección física del hospital
+        /// </summary>
         public string Address { get; set; }
 
+        /// <summary>
+        /// Constructor para crear un nuevo hospital
+        /// </summary>
+        /// <param name="_id">Identificador único del hospital</param>
+        /// <param name="_name">Nombre del hospital</param>
+        /// <param name="_address">Dirección del hospital</param>
         public Hospital(int _id, string _name, string _address)
         {
             Id = _id;
             Name = _name;
             Address = _address;
         }
-
-
     }
 
+    /// <summary>
+    /// Método principal que ejecuta el sistema de gestión de citas médicas
+    /// </summary>
+    /// <param name="args">Argumentos de línea de comandos</param>
     public static void Main(string[] args)
     {
         // Pacientes 
@@ -296,14 +508,14 @@ internal class Program
             Console.WriteLine(doctor);
         }
         Console.WriteLine("--------------------------------------------------");
-        Console.WriteLine( "Ingrese el ID del doctor para asignar a la cita:");
+        Console.WriteLine("Ingrese el ID del doctor para asignar a la cita:");
         int idDoctor = int.Parse(Console.ReadLine());
         Doctor doctorSeleccionado = doctores.Find(d => d.GetId(idDoctor) == idDoctor);
         Console.WriteLine("--------------------------------------------------");
-        Console.WriteLine( idCita + " " + fechaCita + " " + especialidadCita + " " + doctorSeleccionado.Name + " " + doctorSeleccionado.LastName);
+        Console.WriteLine(idCita + " " + fechaCita + " " + especialidadCita + " " + doctorSeleccionado.Name + " " + doctorSeleccionado.LastName);
 
         // Asignar Cita al Paciente y Doctor
-        MedicalAppointment nuevaCita = new MedicalAppointment(idCita, fechaCita, especialidadCita ,doctorSeleccionado, pacienteSeleccionado);
+        MedicalAppointment nuevaCita = new MedicalAppointment(idCita, fechaCita, especialidadCita, doctorSeleccionado, pacienteSeleccionado);
         pacienteSeleccionado.AddCita(nuevaCita);
         doctorSeleccionado.AddCitaPending(nuevaCita);
         Console.WriteLine("Cita creada exitosamente para el paciente " + pacienteSeleccionado.Name + " " + pacienteSeleccionado.LastName);
