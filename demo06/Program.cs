@@ -2,14 +2,20 @@
 
 internal class Program
 {
-  
-    // Interface IMedicalAppointment
-    interface IMedicalAppointment{
+
+    /// <summary>
+    ///  Interface IMedicalAppointment define un contrato para las citas médicas.
+    /// </summary>
+    interface IMedicalAppointment
+    {
         void ShowAllMedicalAppointment(); // Método para mostrar todas las citas médicas
     }
 
 
-    // Clase Cita representa una cita médica
+    /// <summary>
+    /// Clase MedicalAppointment implementa la interfaz IMedicalAppointment y representa una cita médica.
+    /// </summary>
+    
     class MedicalAppointment : IMedicalAppointment
     {
         private int Id { get; set; }
@@ -35,6 +41,7 @@ internal class Program
         // Notificar sobre una cita médica
 
     }
+    
 
     // Clase Usuario representa un usuario del sistema
     class User
